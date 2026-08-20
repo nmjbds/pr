@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sell on Bards — Partner With Us</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+:root{--black:#0A0A0A;--white:#FAFAFA;--gray-50:#F9F9F7;--gray-100:#F2F2F0;--gray-200:#E4E4E2;--gray-300:#C8C8C6;--gray-400:#8A8A88;--gray-600:#4A4A48;--orange:#FF4F00;--red:#C8001A;--green:#16A34A;--radius:14px;--radius-sm:10px;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--black);line-height:1.5;overflow-x:hidden;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+a{color:inherit;}
+.mono{font-family:'DM Mono',monospace;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
+}
+
+/* ── Reveal-on-scroll (minimal) ── */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+
+/* ── Nav ── */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1080px;margin:0 auto;transition:background .25s ease,box-shadow .25s ease;}
+.nav.nav-solid{background:rgba(250,250,250,.92);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--gray-200);}
+.nav .brand{font-family:'Bebas Neue';font-size:22px;letter-spacing:4px;text-decoration:none;color:var(--black);}
+.nav-links{display:flex;align-items:center;gap:20px;}
+.nav-signin{font-size:12.5px;font-weight:600;text-decoration:none;color:var(--gray-600);}
+.nav-signin:hover{color:var(--black);}
+.nav-cta{height:38px;padding:0 18px;background:var(--black);color:#fff;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;text-decoration:none;transition:background .15s;}
+.nav-cta:hover{background:var(--orange);}
+
+/* ── Hero (split) ── */
+.hero{background:var(--black);color:var(--white);padding:56px 24px 0;overflow:hidden;}
+.hero-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding-bottom:0;}
+.hero-copy{padding-bottom:64px;}
+.hero-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:14px;}
+.hero h1{font-family:'Bebas Neue';font-size:clamp(40px,6vw,64px);letter-spacing:2px;line-height:1.02;margin-bottom:18px;}
+.hero p{font-size:15px;color:rgba(255,255,255,.65);max-width:420px;margin-bottom:30px;}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px 0 30px;border-radius:var(--radius-sm);font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;transition:transform .12s,opacity .18s;}
+.btn:active{transform:scale(.98);}
+.btn-primary{background:var(--orange);color:#fff;}
+.btn-primary:hover{opacity:.9;}
+.btn-primary .arrow{transition:transform .2s ease;}
+.btn-primary:hover .arrow{transform:translateX(4px);}
+
+/* ── Hero photo collage (placeholder specs) ── */
+.hero-visual{position:relative;height:460px;}
+.shot{position:absolute;border-radius:12px;border:1.5px dashed rgba(255,255,255,.35);background:rgba(255,255,255,.04);display:flex;flex-direction:column;justify-content:flex-end;padding:14px;overflow:hidden;}
+.shot .shot-tag{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
+.shot .shot-brief{font-size:10.5px;line-height:1.5;color:rgba(255,255,255,.7);}
+.shot-a{width:60%;height:78%;top:0;left:0;animation:floatA 7s ease-in-out infinite;}
+.shot-b{width:46%;height:44%;top:6%;right:0;animation:floatB 8s ease-in-out infinite;}
+.shot-c{width:46%;height:44%;bottom:0;right:4%;animation:floatC 6.5s ease-in-out infinite;}
+@keyframes floatA{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-8px) rotate(-1deg);}}
+@keyframes floatB{0%,100%{transform:translateY(0) rotate(1.5deg);}50%{transform:translateY(7px) rotate(1.5deg);}}
+@keyframes floatC{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-6px) rotate(-2deg);}}
+
+/* ── Section shell ── */
+.section{padding:64px 24px;}
+.section-head{text-align:center;max-width:560px;margin:0 auto 40px;}
+.section-eyebrow{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray-400);font-weight:700;margin-bottom:10px;}
+.section h2{font-family:'Bebas Neue';font-size:clamp(26px,4vw,34px);letter-spacing:1.5px;margin-bottom:10px;}
+.section-sub{font-size:13.5px;color:var(--gray-600);}
+
+/* ── Value prop cards ── */
+.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1080px;margin:0 auto;}
+.value-card{border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px 20px;transition:border-color .2s,transform .2s;}
+.value-card:hover{border-color:var(--black);transform:translateY(-3px);}
+.value-card .bc-icon-circle{margin-bottom:14px;}
+.value-title{font-size:14px;font-weight:700;margin-bottom:6px;}
+.value-body{font-size:12.5px;color:var(--gray-600);line-height:1.55;}
+
+/* ── Categories (photo tiles) ── */
+.cat-section{background:var(--gray-50);}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1080px;margin:0 auto;}
+.cat-tile{border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--gray-200);background:#fff;}
+.cat-tile .cat-shot{aspect-ratio:4/5;border:1.5px dashed var(--gray-300);border-radius:0;margin:8px;height:auto;position:static;background:var(--gray-100);display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;}
+.cat-tile .cat-shot .shot-tag{color:var(--orange);}
+.cat-tile .cat-shot .shot-brief{color:var(--gray-600);}
+.cat-tile .cat-label{padding:0 14px 14px;font-size:13px;font-weight:700;}
+
+/* ── Fees (asymmetric) ── */
+.fees-wrap{max-width:920px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;}
+.fees-main{padding:40px 36px;}
+.fees-main p{font-size:13.5px;color:var(--gray-600);line-height:1.7;margin-top:10px;}
+.fees-example{background:var(--black);color:#fff;padding:40px 32px;display:flex;flex-direction:column;justify-content:center;}
+.fees-example .fx-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;}
+.fees-example .fx-value{font-family:'Bebas Neue';font-size:40px;letter-spacing:1px;color:var(--orange);}
+.fees-example .fx-note{font-size:11.5px;color:rgba(255,255,255,.5);margin-top:8px;line-height:1.5;}
+
+/* ── How it works ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto;position:relative;}
+.steps::before{content:'';position:absolute;top:20px;left:16.6%;right:16.6%;height:1.5px;background:var(--gray-200);z-index:0;}
+.step{text-align:center;position:relative;z-index:1;}
+.step-n{width:40px;height:40px;border-radius:50%;background:var(--black);color:#fff;font-family:'Bebas Neue';font-size:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.step-title{font-size:14px;font-weight:700;margin-bottom:6px;}
+.step-body{font-size:12.5px;color:var(--gray-600);line-height:1.55;}
+
+/* ── Contact ── */
+.contact-section{background:var(--black);color:#fff;text-align:center;}
+.contact-section .section-sub{color:rgba(255,255,255,.55);}
+.contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.contact-link{display:flex;align-items:center;gap:9px;height:46px;padding:0 20px;border:1.5px solid rgba(255,255,255,.18);border-radius:24px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;transition:border-color .15s,background .15s;}
+.contact-link:hover{border-color:#fff;background:rgba(255,255,255,.06);}
+
+/* ── Final CTA ── */
+.final-cta{text-align:center;padding:70px 24px;}
+.final-cta h2{font-family:'Bebas Neue';font-size:clamp(28px,5vw,40px);letter-spacing:1.5px;margin-bottom:20px;}
+
+/* ── Footer ── */
+.footer{border-top:1px solid var(--gray-200);padding:26px 24px;display:flex;align-items:center;justify-content:space-between;max-width:1080px;margin:0 auto;font-size:11.5px;color:var(--gray-400);flex-wrap:wrap;gap:10px;}
+.footer a{text-decoration:none;color:var(--gray-400);margin-left:16px;}
+.footer a:hover{color:var(--black);}
+
+@media (max-width: 860px){
+  .value-grid{grid-template-columns:repeat(2,1fr);}
+  .cat-grid{grid-template-columns:repeat(2,1fr);}
+  .steps{grid-template-columns:1fr;gap:32px;}
+  .steps::before{display:none;}
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-visual{height:340px;margin-bottom:24px;order:-1;}
+  .fees-wrap{grid-template-columns:1fr;}
+}
+@media (max-width: 520px){
+  .value-grid{grid-template-columns:1fr;}
+  .cat-grid{grid-template-columns:1fr 1fr;}
+  .nav-signin{display:none;}
+}
+
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <a href="https://bardskh.com" class="brand">BARDS</a>
+  <div class="nav-links">
+    <a href="#" id="signinLink" class="nav-signin">Already applied? Sign in</a>
+    <a href="/settle/form" class="nav-cta">Start Selling</a>
+  </div>
+</nav>
+
+<!-- ══════ Hero (split layout) ══════ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">BARDS PARTNERS</div>
+      <h1>SELL ON<br>BARDS</h1>
+      <p>Cambodia's streetwear marketplace. Reach shoppers who are already browsing — no storefront to build, no ads to buy.</p>
+      <a href="/settle/form" class="btn btn-primary">Start Selling <span class="arrow">→</span></a>
+    </div>
+    <div class="hero-visual">
+      <!--
+        HERO PHOTO BRIEF — 3 shots, replace .shot divs with real <img>.
+        These three should read as one continuous "collage" moment, so shoot
+        them in the same session / same light so they match in color temperature.
+      -->
+      <div class="shot shot-a">
+        <div class="shot-tag">Photo 1 / Hero</div>
+        <div class="shot-brief">นางแบบ/นายแบบสวมชุดสตรีทแวร์เต็มตัว มุม 3/4 ยืนตรง สายตามองกล้องนิ่งๆ มั่นใจ พื้นหลังคอนกรีต/ผนังปูนเปลือยสีเทา แสงธรรมชาติด้านข้าง ให้ฟีล "ของจริงที่คนใส่จริง" ไม่ใช่สตูดิโอขาวล้วน</div>
+      </div>
+      <div class="shot shot-b">
+        <div class="shot-tag">Photo 2 / Detail</div>
+        <div class="shot-brief">Close-up สินค้าชิ้นเด่น เช่น สนีกเกอร์หรือรายละเอียดผ้า/โลโก้ มุมเฉียง 45° เน้นพื้นผิววัสดุให้เห็นคุณภาพ</div>
+      </div>
+      <div class="shot shot-c">
+        <div class="shot-tag">Photo 3 / Process</div>
+        <div class="shot-brief">มือกำลังแพ็คกล่องพัสดุ Bards หรือติดสติกเกอร์ออเดอร์ สื่อว่า "นี่คือสิ่งที่เกิดขึ้นจริงเมื่อคุณขาย" ให้ความรู้สึกเป็นระบบ ไว้ใจได้</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ Why Sell on Bards ══════ -->
+<section class="section">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">Why Bards</div>
+    <h2>Built for Sellers</h2>
+  </div>
+  <div class="value-grid">
+    <div class="value-card reveal">
+      <div class="bc-icon-circle bc-icon-circle--accent">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="value-title">Built-in Audience</div>
+      <div class="value-body">Your products show up to customers already shopping on bardskh.com. No separate marketing to get discovered.</div>
+    </div>
+    <div class="value-card reveal">
+      <div class="bc-icon-circle bc-icon-circle--accent">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>
+      </div>
+      <div class="value-title">You're in Control</div>
+      <div class="value-body">Manage your own products, pricing, and stock from your own seller dashboard.</div>
+    </div>
+    <div class="value-card reveal">
+      <div class="bc-icon-circle bc-icon-circle--accent">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <div class="value-title">We Handle Payments</div>
+      <div class="value-body">Secure checkout via ABA PayWay. You never touch payment infrastructure.</div>
+    </div>
+    <div class="value-card reveal">
+      <div class="bc-icon-circle bc-icon-circle--accent">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+      </div>
+      <div class="value-title">Fast Payouts</div>
+      <div class="value-body">Get paid straight to your bank account — ABA, ACLEDA, Wing, or Chip Mong.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ Categories (photo tiles) ══════ -->
+<section class="section cat-section">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">Product Categories</div>
+    <h2>What You Can Sell</h2>
+    <div class="section-sub">Streetwear, accessories, and more.</div>
+  </div>
+  <!--
+    CATEGORY PHOTO BRIEF (applies to every tile the JS below generates):
+    ถ่ายสินค้าตัวแทนของแต่ละหมวดหมู่ วางกึ่งกลางเฟรม พื้นหลังสีเดียวกันทุกภาพ
+    (เทาอ่อน var(--gray-100) หรือขาว) แสงสม่ำเสมอไม่มีเงาแข็ง ระยะซูมใกล้เคียงกัน
+    ทุกภาพ — เพื่อให้ grid ดู consistent เป็นชุดเดียวกันเวลาโหลดสด
+  -->
+  <div class="cat-grid" id="catGrid">
+    <div class="cat-tile reveal">
+      <div class="cat-shot shot">
+        <div class="shot-tag">Loading…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ Fees (asymmetric) ══════ -->
+<section class="section">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">Pricing</div>
+    <h2>Simple, Competitive Fees</h2>
+  </div>
+  <div class="fees-wrap reveal">
+    <div class="fees-main">
+      <div class="section-eyebrow" style="margin-bottom:6px;">No monthly or listing fees</div>
+      <p>We charge a competitive commission per sale — no monthly fees, no listing fees. Exact rates depend on your category and volume. Reach out to our partner team and we'll walk you through the details.</p>
+    </div>
+    <div class="fees-example">
+      <div class="fx-label mono">Example only</div>
+      <div class="fx-value">$25 → $[X]</div>
+      <div class="fx-note">แทน [X] ด้วยตัวอย่างค่าคอมมิชชั่นจริงของหมวดที่ขายดีที่สุด — ตัวเลขที่จับต้องได้จะน่าเชื่อถือกว่าคำว่า "competitive" ลอยๆ</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ How It Works ══════ -->
+<section class="section cat-section">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">Getting Started</div>
+    <h2>How It Works</h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-n">1</div>
+      <div class="step-title">Apply</div>
+      <div class="step-body">Tell us about your business. Takes a few minutes.</div>
+    </div>
+    <div class="step reveal">
+      <div class="step-n">2</div>
+      <div class="step-title">Get Approved</div>
+      <div class="step-body">Our team reviews your application.</div>
+    </div>
+    <div class="step reveal">
+      <div class="step-n">3</div>
+      <div class="step-title">Start Selling</div>
+      <div class="step-body">List your first product and go live.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ Contact ══════ -->
+<section class="section contact-section">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">Get In Touch</div>
+    <h2>Questions Before You Apply?</h2>
+    <div class="section-sub">Talk to our partner team any time.</div>
+  </div>
+  <div class="contact-links reveal">
+    <a class="contact-link" href="https://t.me/bards_official" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#2AABEE"/><path fill="#fff" d="M180.5 72.3 158 179.2c-1.7 7.6-6.2 9.5-12.5 5.9l-34.6-25.5-16.7 16.1c-1.8 1.8-3.4 3.4-6.9 3.4l2.5-35.1 63.9-57.7c2.8-2.5-.6-3.9-4.3-1.4L69 138.6l-34.3-10.7c-7.5-2.3-7.6-7.5 1.6-11.1l134-51.7c6.2-2.3 11.7 1.5 9.7 11.2z"/></svg>
+      @bards_official
+    </a>
+    <a class="contact-link" href="mailto:support@bardskh.com">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      support@bardskh.com
+    </a>
+  </div>
+</section>
+
+<!-- ══════ Final CTA ══════ -->
+<section class="final-cta reveal">
+  <h2>Ready to grow with Bards?</h2>
+  <a href="/settle/form" class="btn btn-primary">Start Selling <span class="arrow">→</span></a>
+</section>
+
+<footer class="footer">
+  <div>© <span id="year"></span> Bards</div>
+  <div>
+    <a href="https://bardskh.com">bardskh.com</a>
+    <a href="https://bardskh.com/en/terms">Terms</a>
+    <a href="https://bardskh.com/en/privacy">Privacy</a>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('signinLink').href = bardsSigninUrl('/seller');
+
+// Sticky nav background on scroll
+(() => {
+  const nav = document.getElementById('mainNav');
+  const onScroll = () => nav.classList.toggle('nav-solid', window.scrollY > 40);
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+// Minimal scroll-reveal via IntersectionObserver
+(() => {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('is-visible'), i * 60);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+})();
+
+// Live categories — same GET /api/categories every other catalog page uses.
+// Each category renders as a photo tile: image placeholder (real <img> goes
+// here later) + category label underneath.
+(async () => {
+  try {
+    const cats = await CategoriesAPI.fetch();
+    const grid = document.getElementById('catGrid');
+    if (!cats.length) { grid.innerHTML = ''; return; }
+    grid.innerHTML = cats.map(c => `
+      <div class="cat-tile reveal">
+        <div class="cat-shot shot">
+          <div class="shot-tag">${escapeHtml(c.name)}</div>
+        </div>
+        <div class="cat-label">${escapeHtml(c.name)}</div>
+      </div>
+    `).join('');
+    // re-observe newly injected reveal targets
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } catch(e) {
+    document.getElementById('catGrid').innerHTML = '';
+  }
+})();
+</script>
+</body>
+</html>
