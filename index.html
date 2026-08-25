@@ -8,364 +8,496 @@
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="components.css">
 <style>
-:root{--black:#0A0A0A;--white:#FAFAFA;--gray-50:#F9F9F7;--gray-100:#F2F2F0;--gray-200:#E4E4E2;--gray-300:#C8C8C6;--gray-400:#8A8A88;--gray-600:#4A4A48;--orange:#FF4F00;--red:#C8001A;--green:#16A34A;--radius:14px;--radius-sm:10px;}
+:root{
+  --black:#0A0A0A;--white:#FAFAFA;--gray-50:#F9F9F7;--gray-100:#F2F2F0;--gray-200:#E4E4E2;
+  --gray-300:#C8C8C6;--gray-400:#8A8A88;--gray-600:#4A4A48;--orange:#FF4F00;--red:#C8001A;--green:#16A34A;
+  --radius:14px;--radius-sm:10px;
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
 body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--black);line-height:1.5;overflow-x:hidden;}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
 a{color:inherit;}
-.mono{font-family:'DM Mono',monospace;}
+img{max-width:100%;display:block;}
+button{font:inherit;}
 
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
-}
+/* ── Reveal ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+@media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none;transition:none;} }
 
-/* ── Reveal-on-scroll (minimal) ── */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);}
-.reveal.is-visible{opacity:1;transform:translateY(0);}
+/* ── Tag / hang-tag component (signature element) ── */
+.tag{position:relative;display:inline-flex;align-items:center;gap:7px;padding:8px 14px 8px 22px;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;font-weight:500;
+  border:1.5px solid currentColor;border-radius:3px 13px 13px 3px;transform:rotate(-3deg);white-space:nowrap;}
+.tag::before{content:'';position:absolute;left:8px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;border:1.5px solid currentColor;}
+.tag-str{position:absolute;width:1.5px;height:13px;background:currentColor;opacity:.55;left:11px;top:-11px;transform:rotate(20deg);transform-origin:bottom center;}
+.tag--light{color:var(--white);}
+.tag--dark{color:var(--black);}
+.tag .dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;}
 
 /* ── Nav ── */
-.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1080px;margin:0 auto;transition:background .25s ease,box-shadow .25s ease;}
-.nav.nav-solid{background:rgba(250,250,250,.92);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--gray-200);}
-.nav .brand{font-family:'Bebas Neue';font-size:22px;letter-spacing:4px;text-decoration:none;color:var(--black);}
-.nav-links{display:flex;align-items:center;gap:20px;}
-.nav-signin{font-size:12.5px;font-weight:600;text-decoration:none;color:var(--gray-600);}
+.nav{background:var(--gray-50);border-bottom:1px solid var(--gray-200);position:relative;z-index:20;}
+.nav-inner{max-width:1080px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:'Bebas Neue';font-size:22px;letter-spacing:4px;text-decoration:none;color:var(--black);display:flex;align-items:center;gap:8px;}
+.brand-mark{width:16px;height:16px;border:1.5px solid var(--black);border-radius:2px 7px 7px 2px;position:relative;flex-shrink:0;}
+.brand-mark::before{content:'';position:absolute;left:2.5px;top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:50%;border:1px solid var(--black);}
+.nav-jump{display:flex;gap:22px;}
+.nav-jump a{font-size:11.5px;font-weight:600;text-decoration:none;color:var(--gray-600);transition:color .18s;}
+.nav-jump a:hover{color:var(--black);}
+.nav-links{display:flex;align-items:center;gap:18px;}
+.nav-signin{font-size:12px;font-weight:600;text-decoration:none;color:var(--gray-600);}
 .nav-signin:hover{color:var(--black);}
-.nav-cta{height:38px;padding:0 18px;background:var(--black);color:#fff;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;text-decoration:none;transition:background .15s;}
+.nav-cta{height:38px;padding:0 18px;background:var(--black);color:#fff;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;text-decoration:none;transition:background .18s;}
 .nav-cta:hover{background:var(--orange);}
-
-/* ── Hero (split) ── */
-.hero{background:var(--black);color:var(--white);padding:56px 24px 0;overflow:hidden;}
-.hero-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding-bottom:0;}
-.hero-copy{padding-bottom:64px;}
-.hero-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:14px;}
-.hero h1{font-family:'Bebas Neue';font-size:clamp(40px,6vw,64px);letter-spacing:2px;line-height:1.02;margin-bottom:18px;}
-.hero p{font-size:15px;color:rgba(255,255,255,.65);max-width:420px;margin-bottom:30px;}
-.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px 0 30px;border-radius:var(--radius-sm);font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;transition:transform .12s,opacity .18s;}
-.btn:active{transform:scale(.98);}
-.btn-primary{background:var(--orange);color:#fff;}
-.btn-primary:hover{opacity:.9;}
-.btn-primary .arrow{transition:transform .2s ease;}
-.btn-primary:hover .arrow{transform:translateX(4px);}
-
-/* ── Hero photo collage (placeholder specs) ── */
-.hero-visual{position:relative;height:460px;}
-.shot{position:absolute;border-radius:12px;border:1.5px dashed rgba(255,255,255,.35);background:rgba(255,255,255,.04);display:flex;flex-direction:column;justify-content:flex-end;padding:14px;overflow:hidden;}
-.shot .shot-tag{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
-.shot .shot-brief{font-size:10.5px;line-height:1.5;color:rgba(255,255,255,.7);}
-.shot-a{width:60%;height:78%;top:0;left:0;animation:floatA 7s ease-in-out infinite;}
-.shot-b{width:46%;height:44%;top:6%;right:0;animation:floatB 8s ease-in-out infinite;}
-.shot-c{width:46%;height:44%;bottom:0;right:4%;animation:floatC 6.5s ease-in-out infinite;}
-@keyframes floatA{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-8px) rotate(-1deg);}}
-@keyframes floatB{0%,100%{transform:translateY(0) rotate(1.5deg);}50%{transform:translateY(7px) rotate(1.5deg);}}
-@keyframes floatC{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-6px) rotate(-2deg);}}
+@media (max-width:760px){ .nav-jump{display:none;} }
 
 /* ── Section shell ── */
-.section{padding:64px 24px;}
-.section-head{text-align:center;max-width:560px;margin:0 auto 40px;}
-.section-eyebrow{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray-400);font-weight:700;margin-bottom:10px;}
-.section h2{font-family:'Bebas Neue';font-size:clamp(26px,4vw,34px);letter-spacing:1.5px;margin-bottom:10px;}
-.section-sub{font-size:13.5px;color:var(--gray-600);}
+.blk{padding:76px 24px;position:relative;}
+.blk-inner{max-width:1080px;margin:0 auto;}
+.blk-head{max-width:560px;margin-bottom:44px;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;font-weight:500;margin-bottom:14px;opacity:.6;}
+.blk h2{font-family:'Bebas Neue';font-size:clamp(30px,4.4vw,44px);letter-spacing:1px;line-height:1.02;}
+.blk-sub{font-size:13.5px;margin-top:10px;opacity:.65;max-width:440px;}
 
-/* ── Value prop cards ── */
-.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1080px;margin:0 auto;}
-.value-card{border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px 20px;transition:border-color .2s,transform .2s;}
-.value-card:hover{border-color:var(--black);transform:translateY(-3px);}
-.value-card .bc-icon-circle{margin-bottom:14px;}
-.value-title{font-size:14px;font-weight:700;margin-bottom:6px;}
-.value-body{font-size:12.5px;color:var(--gray-600);line-height:1.55;}
+.on-black{background:var(--black);color:var(--white);}
+.on-cream{background:var(--gray-50);color:var(--black);}
+.on-white{background:var(--white);color:var(--black);}
+.on-orange{background:var(--orange);color:var(--black);}
 
-/* ── Categories (photo tiles) ── */
-.cat-section{background:var(--gray-50);}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1080px;margin:0 auto;}
-.cat-tile{border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--gray-200);background:#fff;}
-.cat-tile .cat-shot{aspect-ratio:4/5;border:1.5px dashed var(--gray-300);border-radius:0;margin:8px;height:auto;position:static;background:var(--gray-100);display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;}
-.cat-tile .cat-shot .shot-tag{color:var(--orange);}
-.cat-tile .cat-shot .shot-brief{color:var(--gray-600);}
-.cat-tile .cat-label{padding:0 14px 14px;font-size:13px;font-weight:700;}
+/* ── Hero ── */
+.hero{background:var(--black);color:var(--white);padding:64px 0 90px;overflow:hidden;}
+.hero-top{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;justify-content:flex-end;margin-bottom:8px;}
+.hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:20px;align-items:end;}
+.hero-headline-wrap{padding-left:24px;}
+.hero h1{font-family:'Bebas Neue';font-size:clamp(56px,10.5vw,130px);letter-spacing:0;line-height:.86;
+  margin-left:-3px;text-transform:uppercase;}
+.hero h1 .ln{display:block;}
+.hero h1 .accent{color:var(--orange);}
+.hero-sub-col{padding:0 24px 4px 0;border-left:1.5px solid rgba(255,255,255,.18);padding-left:24px;}
+.hero-sub-col p{font-size:13.5px;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:26px;}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 28px;border-radius:4px;
+  font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;
+  transition:transform .12s,opacity .18s;}
+.btn:active{transform:scale(.98);}
+.btn-primary{background:var(--orange);color:#0A0A0A;}
+.btn-primary:hover{opacity:.9;}
+.btn-dark{background:var(--black);color:#fff;}
+.btn-dark:hover{opacity:.85;}
+@media (max-width:820px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-sub-col{border-left:none;padding-left:24px;border-top:1.5px solid rgba(255,255,255,.18);padding-top:22px;margin-top:22px;}
+  .hero-headline-wrap{padding-left:24px;}
+}
 
-/* ── Fees (asymmetric) ── */
-.fees-wrap{max-width:920px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;}
-.fees-main{padding:40px 36px;}
-.fees-main p{font-size:13.5px;color:var(--gray-600);line-height:1.7;margin-top:10px;}
-.fees-example{background:var(--black);color:#fff;padding:40px 32px;display:flex;flex-direction:column;justify-content:center;}
-.fees-example .fx-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;}
-.fees-example .fx-value{font-family:'Bebas Neue';font-size:40px;letter-spacing:1px;color:var(--orange);}
-.fees-example .fx-note{font-size:11.5px;color:rgba(255,255,255,.5);margin-top:8px;line-height:1.5;}
+/* ── Photo slot (the one real-photography spot) ── */
+.photo-slot{position:relative;aspect-ratio:4/5;border:1.5px dashed rgba(255,255,255,.3);border-radius:4px;
+  overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);}
+.photo-slot img{width:100%;height:100%;object-fit:cover;}
+.photo-slot-info{display:none;flex-direction:column;gap:6px;text-align:center;padding:20px;}
+.photo-slot.placeholder-empty .photo-slot-info{display:flex;}
+.ps-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1px;font-weight:700;color:var(--orange);}
+.ps-spec{font-family:'DM Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.4);line-height:1.6;}
 
-/* ── How it works ── */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto;position:relative;}
-.steps::before{content:'';position:absolute;top:20px;left:16.6%;right:16.6%;height:1.5px;background:var(--gray-200);z-index:0;}
-.step{text-align:center;position:relative;z-index:1;}
-.step-n{width:40px;height:40px;border-radius:50%;background:var(--black);color:#fff;font-family:'Bebas Neue';font-size:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
-.step-title{font-size:14px;font-weight:700;margin-bottom:6px;}
-.step-body{font-size:12.5px;color:var(--gray-600);line-height:1.55;}
+/* ── Spec sheet (value props) ── */
+.spec-list{display:flex;flex-direction:column;border-top:1.5px solid var(--gray-200);}
+.spec-row{display:grid;grid-template-columns:64px 40px 1fr 1.2fr;gap:20px;align-items:center;
+  padding:22px 0;border-bottom:1.5px solid var(--gray-200);}
+.spec-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);}
+.spec-icon{width:38px;height:38px;border-radius:8px;background:var(--white);border:1.5px solid var(--gray-200);
+  display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0;}
+.spec-title{font-size:14.5px;font-weight:700;}
+.spec-body{font-size:12.5px;color:var(--gray-600);line-height:1.6;}
+@media (max-width:700px){
+  .spec-row{grid-template-columns:32px 34px 1fr;}
+  .spec-body{grid-column:2/-1;margin-top:2px;}
+}
 
-/* ── Contact ── */
-.contact-section{background:var(--black);color:#fff;text-align:center;}
-.contact-section .section-sub{color:rgba(255,255,255,.55);}
-.contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
-.contact-link{display:flex;align-items:center;gap:9px;height:46px;padding:0 20px;border:1.5px solid rgba(255,255,255,.18);border-radius:24px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;transition:border-color .15s,background .15s;}
-.contact-link:hover{border-color:#fff;background:rgba(255,255,255,.06);}
+/* ── Categories (orange block) ── */
+.cat-chips{display:flex;gap:9px;flex-wrap:wrap;}
+.cat-chip{height:36px;padding:0 18px;border-radius:3px 12px 12px 3px;background:var(--black);color:var(--white);
+  border:1.5px solid var(--black);font-size:12px;font-weight:600;display:flex;align-items:center;
+  transition:transform .18s;}
+.cat-chip:hover{transform:translateY(-2px);}
 
-/* ── Final CTA ── */
-.final-cta{text-align:center;padding:70px 24px;}
-.final-cta h2{font-family:'Bebas Neue';font-size:clamp(28px,5vw,40px);letter-spacing:1.5px;margin-bottom:20px;}
+/* ── Fees (receipt style, black) ── */
+.receipt{max-width:520px;border:1.5px solid rgba(255,255,255,.2);border-radius:4px;padding:0;}
+.receipt-row{display:flex;justify-content:space-between;align-items:baseline;padding:18px 24px;
+  border-bottom:1px dashed rgba(255,255,255,.22);}
+.receipt-row:last-child{border-bottom:none;}
+.receipt-label{font-size:13px;font-weight:600;}
+.receipt-value{font-family:'DM Mono',monospace;font-size:13px;color:var(--orange);}
+.receipt-note{padding:18px 24px;font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;border-top:1.5px solid rgba(255,255,255,.2);}
+
+/* ── How it works (ticket stubs, cream) ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.step{background:var(--white);border:1.5px solid var(--gray-200);border-top:3px dashed var(--gray-300);
+  border-radius:0 0 8px 8px;padding:26px 22px;position:relative;}
+.step-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-400);margin-bottom:14px;letter-spacing:1px;}
+.step-icon{width:34px;height:34px;color:var(--orange);margin-bottom:14px;}
+.step-title{font-size:14.5px;font-weight:700;margin-bottom:6px;}
+.step-body{font-size:12.5px;color:var(--gray-600);line-height:1.6;}
+@media (max-width:820px){ .steps{grid-template-columns:1fr;} }
+
+/* ── FAQ ── */
+.faq-list{display:flex;flex-direction:column;}
+.faq-item{border-bottom:1.5px solid var(--gray-200);}
+.faq-item:first-child{border-top:1.5px solid var(--gray-200);}
+.faq-q{width:100%;display:flex;align-items:center;gap:16px;padding:20px 0;background:none;border:none;
+  text-align:left;cursor:pointer;font-family:'Space Grotesk',sans-serif;}
+.faq-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-400);flex-shrink:0;width:30px;}
+.faq-q-text{flex:1;font-size:13.5px;font-weight:600;color:var(--black);}
+.faq-icon{width:22px;height:22px;border-radius:50%;background:var(--gray-100);flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;transition:transform .3s,background .2s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--orange);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a-inner{padding:0 0 22px 46px;font-size:12.5px;color:var(--gray-600);line-height:1.7;max-width:560px;}
+
+/* ── Contact + CTA (orange block) ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+.contact-links{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+.contact-link{display:flex;align-items:center;gap:10px;height:48px;padding:0 18px;border-radius:4px;
+  background:var(--black);color:#fff;text-decoration:none;font-size:13px;font-weight:600;width:fit-content;
+  transition:transform .15s;}
+.contact-link:hover{transform:translateX(4px);}
+.final-cta-box{text-align:right;}
+.final-cta-box h2{margin-bottom:20px;}
+@media (max-width:760px){
+  .contact-grid{grid-template-columns:1fr;}
+  .final-cta-box{text-align:left;}
+}
 
 /* ── Footer ── */
-.footer{border-top:1px solid var(--gray-200);padding:26px 24px;display:flex;align-items:center;justify-content:space-between;max-width:1080px;margin:0 auto;font-size:11.5px;color:var(--gray-400);flex-wrap:wrap;gap:10px;}
-.footer a{text-decoration:none;color:var(--gray-400);margin-left:16px;}
-.footer a:hover{color:var(--black);}
-
-@media (max-width: 860px){
-  .value-grid{grid-template-columns:repeat(2,1fr);}
-  .cat-grid{grid-template-columns:repeat(2,1fr);}
-  .steps{grid-template-columns:1fr;gap:32px;}
-  .steps::before{display:none;}
-  .hero-grid{grid-template-columns:1fr;}
-  .hero-visual{height:340px;margin-bottom:24px;order:-1;}
-  .fees-wrap{grid-template-columns:1fr;}
-}
-@media (max-width: 520px){
-  .value-grid{grid-template-columns:1fr;}
-  .cat-grid{grid-template-columns:1fr 1fr;}
-  .nav-signin{display:none;}
-}
-
-:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+.footer{background:var(--black);color:rgba(255,255,255,.7);padding:60px 24px 28px;}
+.footer-top{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px;
+  padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.14);}
+.footer-brand p{font-size:12px;line-height:1.7;color:rgba(255,255,255,.45);margin-top:14px;max-width:220px;}
+.footer-col-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:16px;}
+.footer-col a{display:block;font-size:12.5px;color:rgba(255,255,255,.75);text-decoration:none;margin-bottom:11px;
+  transition:color .18s;}
+.footer-col a:hover{color:var(--orange);}
+.footer-bottom{max-width:1080px;margin:0 auto;padding-top:22px;display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:rgba(255,255,255,.4);}
+.footer-social{display:flex;gap:12px;}
+.footer-social a{width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;color:#fff;transition:border-color .18s;}
+.footer-social a:hover{border-color:var(--orange);}
+@media (max-width:760px){ .footer-top{grid-template-columns:1fr 1fr;} }
 </style>
 </head>
 <body>
 
-<nav class="nav" id="mainNav">
-  <a href="https://bardskh.com" class="brand">BARDS</a>
-  <div class="nav-links">
-    <a href="#" id="signinLink" class="nav-signin">Already applied? Sign in</a>
-    <a href="/settle/form" class="nav-cta">Start Selling</a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="https://bardskh.com" class="brand"><span class="brand-mark"></span>BARDS</a>
+    <div class="nav-jump">
+      <a href="#spec">Why Sell</a>
+      <a href="#fees">Fees</a>
+      <a href="#how">How It Works</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-links">
+      <a href="#" id="signinLink" class="nav-signin">Already applied? Sign in</a>
+      <a href="/settle/form" class="nav-cta">Start Selling</a>
+    </div>
   </div>
 </nav>
 
-<!-- ══════ Hero (split layout) ══════ -->
+<!-- ══════ Hero ══════ -->
 <section class="hero">
-  <div class="hero-grid">
-    <div class="hero-copy">
-      <div class="hero-eyebrow">BARDS PARTNERS</div>
-      <h1>SELL ON<br>BARDS</h1>
-      <p>Cambodia's streetwear marketplace. Reach shoppers who are already browsing — no storefront to build, no ads to buy.</p>
-      <a href="/settle/form" class="btn btn-primary">Start Selling <span class="arrow">→</span></a>
-    </div>
-    <div class="hero-visual">
-      <!--
-        HERO PHOTO BRIEF — 3 shots, replace .shot divs with real <img>.
-        These three should read as one continuous "collage" moment, so shoot
-        them in the same session / same light so they match in color temperature.
-      -->
-      <div class="shot shot-a">
-        <div class="shot-tag">Photo 1 / Hero</div>
-        <div class="shot-brief">นางแบบ/นายแบบสวมชุดสตรีทแวร์เต็มตัว มุม 3/4 ยืนตรง สายตามองกล้องนิ่งๆ มั่นใจ พื้นหลังคอนกรีต/ผนังปูนเปลือยสีเทา แสงธรรมชาติด้านข้าง ให้ฟีล "ของจริงที่คนใส่จริง" ไม่ใช่สตูดิโอขาวล้วน</div>
-      </div>
-      <div class="shot shot-b">
-        <div class="shot-tag">Photo 2 / Detail</div>
-        <div class="shot-brief">Close-up สินค้าชิ้นเด่น เช่น สนีกเกอร์หรือรายละเอียดผ้า/โลโก้ มุมเฉียง 45° เน้นพื้นผิววัสดุให้เห็นคุณภาพ</div>
-      </div>
-      <div class="shot shot-c">
-        <div class="shot-tag">Photo 3 / Process</div>
-        <div class="shot-brief">มือกำลังแพ็คกล่องพัสดุ Bards หรือติดสติกเกอร์ออเดอร์ สื่อว่า "นี่คือสิ่งที่เกิดขึ้นจริงเมื่อคุณขาย" ให้ความรู้สึกเป็นระบบ ไว้ใจได้</div>
-      </div>
-    </div>
+  <div class="hero-top">
+    <span class="tag tag--light reveal"><span class="tag-str"></span><span class="dot"></span>STATUS: APPLICATIONS OPEN</span>
   </div>
-</section>
-
-<!-- ══════ Why Sell on Bards ══════ -->
-<section class="section">
-  <div class="section-head reveal">
-    <div class="section-eyebrow">Why Bards</div>
-    <h2>Built for Sellers</h2>
-  </div>
-  <div class="value-grid">
-    <div class="value-card reveal">
-      <div class="bc-icon-circle bc-icon-circle--accent">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-headline-wrap reveal">
+        <h1><span class="ln">TAG IT.</span><span class="ln">RACK IT.</span><span class="ln accent">SHIP IT.</span></h1>
       </div>
-      <div class="value-title">Built-in Audience</div>
-      <div class="value-body">Your products show up to customers already shopping on bardskh.com. No separate marketing to get discovered.</div>
-    </div>
-    <div class="value-card reveal">
-      <div class="bc-icon-circle bc-icon-circle--accent">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>
-      </div>
-      <div class="value-title">You're in Control</div>
-      <div class="value-body">Manage your own products, pricing, and stock from your own seller dashboard.</div>
-    </div>
-    <div class="value-card reveal">
-      <div class="bc-icon-circle bc-icon-circle--accent">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-      </div>
-      <div class="value-title">We Handle Payments</div>
-      <div class="value-body">Secure checkout via ABA PayWay. You never touch payment infrastructure.</div>
-    </div>
-    <div class="value-card reveal">
-      <div class="bc-icon-circle bc-icon-circle--accent">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
-      </div>
-      <div class="value-title">Fast Payouts</div>
-      <div class="value-body">Get paid straight to your bank account — ABA, ACLEDA, Wing, or Chip Mong.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ Categories (photo tiles) ══════ -->
-<section class="section cat-section">
-  <div class="section-head reveal">
-    <div class="section-eyebrow">Product Categories</div>
-    <h2>What You Can Sell</h2>
-    <div class="section-sub">Streetwear, accessories, and more.</div>
-  </div>
-  <!--
-    CATEGORY PHOTO BRIEF (applies to every tile the JS below generates):
-    ถ่ายสินค้าตัวแทนของแต่ละหมวดหมู่ วางกึ่งกลางเฟรม พื้นหลังสีเดียวกันทุกภาพ
-    (เทาอ่อน var(--gray-100) หรือขาว) แสงสม่ำเสมอไม่มีเงาแข็ง ระยะซูมใกล้เคียงกัน
-    ทุกภาพ — เพื่อให้ grid ดู consistent เป็นชุดเดียวกันเวลาโหลดสด
-  -->
-  <div class="cat-grid" id="catGrid">
-    <div class="cat-tile reveal">
-      <div class="cat-shot shot">
-        <div class="shot-tag">Loading…</div>
+      <div class="hero-sub-col reveal">
+        <div class="photo-slot" style="max-width:220px;margin-bottom:22px;">
+          <!--
+            HERO PHOTO — replace src below with your own file.
+            assets/photo-hero-tagging.jpg
+            1200×1500px · 4:5 portrait crop
+            Subject: hands attaching a hang-tag to a garment, or folding
+            a piece into a shipping box — mid-action, no need to show a face
+            Light: natural side-light, one clear shadow direction
+            Backdrop: plain, single colour (concrete grey or canvas) — no clutter
+          -->
+          <img src="assets/photo-hero-tagging.jpg" alt="Hands attaching a hang-tag to a garment"
+               onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-empty');">
+          <div class="photo-slot-info">
+            <div class="ps-label">PHOTO — assets/photo-hero-tagging.jpg</div>
+            <div class="ps-spec">1200×1500px · 4:5 portrait<br>natural side-light · plain backdrop<br>hands tagging a garment or packing a box</div>
+          </div>
+        </div>
+        <p>Cambodia's streetwear marketplace. Add your products — we bring the shoppers already browsing bardskh.com.</p>
+        <a href="/settle/form" class="btn btn-primary">Start Selling →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════ Fees (asymmetric) ══════ -->
-<section class="section">
-  <div class="section-head reveal">
-    <div class="section-eyebrow">Pricing</div>
-    <h2>Simple, Competitive Fees</h2>
-  </div>
-  <div class="fees-wrap reveal">
-    <div class="fees-main">
-      <div class="section-eyebrow" style="margin-bottom:6px;">No monthly or listing fees</div>
-      <p>We charge a competitive commission per sale — no monthly fees, no listing fees. Exact rates depend on your category and volume. Reach out to our partner team and we'll walk you through the details.</p>
+<!-- ══════ Why Sell — Spec Sheet ══════ -->
+<section class="blk on-white" id="spec">
+  <div class="blk-inner">
+    <div class="blk-head reveal">
+      <div class="eyebrow">Why Bards</div>
+      <h2>The Spec Sheet</h2>
+      <div class="blk-sub">What you get, itemized.</div>
     </div>
-    <div class="fees-example">
-      <div class="fx-label mono">Example only</div>
-      <div class="fx-value">$25 → $[X]</div>
-      <div class="fx-note">แทน [X] ด้วยตัวอย่างค่าคอมมิชชั่นจริงของหมวดที่ขายดีที่สุด — ตัวเลขที่จับต้องได้จะน่าเชื่อถือกว่าคำว่า "competitive" ลอยๆ</div>
+    <div class="spec-list">
+      <div class="spec-row reveal">
+        <div class="spec-num">01</div>
+        <div class="spec-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="spec-title">Built-in Audience</div>
+        <div class="spec-body">Your products show up to customers already shopping on bardskh.com. No separate marketing to get discovered.</div>
+      </div>
+      <div class="spec-row reveal">
+        <div class="spec-num">02</div>
+        <div class="spec-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>
+        </div>
+        <div class="spec-title">You're in Control</div>
+        <div class="spec-body">Manage your own products, pricing, and stock from your own seller dashboard.</div>
+      </div>
+      <div class="spec-row reveal">
+        <div class="spec-num">03</div>
+        <div class="spec-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="spec-title">We Handle Payments</div>
+        <div class="spec-body">Secure checkout via ABA PayWay. You never touch payment infrastructure.</div>
+      </div>
+      <div class="spec-row reveal">
+        <div class="spec-num">04</div>
+        <div class="spec-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+        </div>
+        <div class="spec-title">Fast Payouts</div>
+        <div class="spec-body">Get paid straight to your bank account — ABA, ACLEDA, Wing, or Chip Mong.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════ How It Works ══════ -->
-<section class="section cat-section">
-  <div class="section-head reveal">
-    <div class="section-eyebrow">Getting Started</div>
-    <h2>How It Works</h2>
-  </div>
-  <div class="steps">
-    <div class="step reveal">
-      <div class="step-n">1</div>
-      <div class="step-title">Apply</div>
-      <div class="step-body">Tell us about your business. Takes a few minutes.</div>
+<!-- ══════ Categories (orange block) ══════ -->
+<section class="blk on-orange" id="categories">
+  <div class="blk-inner">
+    <div class="blk-head reveal">
+      <div class="eyebrow">Product Categories</div>
+      <h2>What You Can List</h2>
+      <div class="blk-sub">Streetwear, accessories, and more.</div>
     </div>
-    <div class="step reveal">
-      <div class="step-n">2</div>
-      <div class="step-title">Get Approved</div>
-      <div class="step-body">Our team reviews your application.</div>
-    </div>
-    <div class="step reveal">
-      <div class="step-n">3</div>
-      <div class="step-title">Start Selling</div>
-      <div class="step-body">List your first product and go live.</div>
+    <div class="cat-chips reveal" id="catChips">
+      <div class="cat-chip">Loading categories…</div>
     </div>
   </div>
 </section>
 
-<!-- ══════ Contact ══════ -->
-<section class="section contact-section">
-  <div class="section-head reveal">
-    <div class="section-eyebrow">Get In Touch</div>
-    <h2>Questions Before You Apply?</h2>
-    <div class="section-sub">Talk to our partner team any time.</div>
-  </div>
-  <div class="contact-links reveal">
-    <a class="contact-link" href="https://t.me/bards_official" target="_blank" rel="noopener">
-      <svg width="16" height="16" viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#2AABEE"/><path fill="#fff" d="M180.5 72.3 158 179.2c-1.7 7.6-6.2 9.5-12.5 5.9l-34.6-25.5-16.7 16.1c-1.8 1.8-3.4 3.4-6.9 3.4l2.5-35.1 63.9-57.7c2.8-2.5-.6-3.9-4.3-1.4L69 138.6l-34.3-10.7c-7.5-2.3-7.6-7.5 1.6-11.1l134-51.7c6.2-2.3 11.7 1.5 9.7 11.2z"/></svg>
-      @bards_official
-    </a>
-    <a class="contact-link" href="mailto:support@bardskh.com">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      support@bardskh.com
-    </a>
+<!-- ══════ Fees (receipt, black) ══════ -->
+<section class="blk on-black" id="fees">
+  <div class="blk-inner">
+    <div class="blk-head reveal">
+      <div class="eyebrow">Pricing</div>
+      <h2>Simple, Competitive Fees</h2>
+    </div>
+    <div class="receipt reveal">
+      <div class="receipt-row"><span class="receipt-label">Monthly fee</span><span class="receipt-value">$0</span></div>
+      <div class="receipt-row"><span class="receipt-label">Listing fee</span><span class="receipt-value">$0</span></div>
+      <div class="receipt-row"><span class="receipt-label">Commission</span><span class="receipt-value">Category-based</span></div>
+      <div class="receipt-note">Exact commission rates depend on your product category and monthly volume. Our partner team will confirm your rate once your application is reviewed.</div>
+    </div>
   </div>
 </section>
 
-<!-- ══════ Final CTA ══════ -->
-<section class="final-cta reveal">
-  <h2>Ready to grow with Bards?</h2>
-  <a href="/settle/form" class="btn btn-primary">Start Selling <span class="arrow">→</span></a>
+<!-- ══════ How It Works (cream) ══════ -->
+<section class="blk on-cream" id="how">
+  <div class="blk-inner">
+    <div class="blk-head reveal">
+      <div class="eyebrow">Getting Started</div>
+      <h2>How It Works</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-file">FILE_01</div>
+        <div class="step-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6M9 16h6M9 8h1"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg></div>
+        <div class="step-title">Apply</div>
+        <div class="step-body">Tell us about your business. Takes a few minutes.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-file">FILE_02</div>
+        <div class="step-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div class="step-title">Get Approved</div>
+        <div class="step-body">Our team reviews your application.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-file">FILE_03</div>
+        <div class="step-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></div>
+        <div class="step-title">Start Selling</div>
+        <div class="step-body">List your first product and go live.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FAQ ══════ -->
+<section class="blk on-white" id="faq">
+  <div class="blk-inner">
+    <div class="blk-head reveal">
+      <div class="eyebrow">Questions</div>
+      <h2>Frequently Asked</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="faq-file">Q01</span><span class="faq-q-text">How is the commission calculated?</span>
+          <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Commission is a percentage of each sale, and the exact rate depends on your product category and monthly volume. There are no monthly or listing fees — our partner team will confirm your rate once your application is reviewed.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="faq-file">Q02</span><span class="faq-q-text">How long does approval take?</span>
+          <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Most applications are reviewed within a few business days. If we need more information, our partner team will reach out directly.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="faq-file">Q03</span><span class="faq-q-text">Do I need a registered business?</span>
+          <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No — both registered businesses and independent sellers can apply. We'll let you know if any additional documents are needed during review.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="faq-file">Q04</span><span class="faq-q-text">Is there a minimum number of products?</span>
+          <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No minimum. You can start with a single product and add more as your catalog grows.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span class="faq-file">Q05</span><span class="faq-q-text">When do I get paid?</span>
+          <span class="faq-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Payouts go straight to your bank account on a regular cycle — ABA, ACLEDA, Wing, or Chip Mong are all supported.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ Contact + Final CTA (orange block) ══════ -->
+<section class="blk on-orange">
+  <div class="blk-inner">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Questions Before<br>You Apply?</h2>
+        <div class="blk-sub">Talk to our partner team any time.</div>
+        <div class="contact-links">
+          <a class="contact-link" href="https://t.me/bards_official" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#2AABEE"/><path fill="#fff" d="M180.5 72.3 158 179.2c-1.7 7.6-6.2 9.5-12.5 5.9l-34.6-25.5-16.7 16.1c-1.8 1.8-3.4 3.4-6.9 3.4l2.5-35.1 63.9-57.7c2.8-2.5-.6-3.9-4.3-1.4L69 138.6l-34.3-10.7c-7.5-2.3-7.6-7.5 1.6-11.1l134-51.7c6.2-2.3 11.7 1.5 9.7 11.2z"/></svg>
+            @bards_official
+          </a>
+          <a class="contact-link" href="mailto:support@bardskh.com">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="color:#fff"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            support@bardskh.com
+          </a>
+        </div>
+      </div>
+      <div class="final-cta-box reveal">
+        <h2>Ready to grow<br>with Bards?</h2>
+        <a href="/settle/form" class="btn btn-dark">Start Selling →</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer class="footer">
-  <div>© <span id="year"></span> Bards</div>
-  <div>
-    <a href="https://bardskh.com">bardskh.com</a>
-    <a href="https://bardskh.com/en/terms">Terms</a>
-    <a href="https://bardskh.com/en/privacy">Privacy</a>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="https://bardskh.com" class="brand" style="color:#fff"><span class="brand-mark" style="border-color:#fff"></span>BARDS</a>
+      <p>Cambodia's streetwear marketplace — built for the shops and racks that make it.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Shop</div>
+      <a href="https://bardskh.com">bardskh.com</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Sell</div>
+      <a href="/settle/form">Start Selling</a>
+      <a href="#spec">Why Sell on Bards</a>
+      <a href="#fees">Fees</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Legal</div>
+      <a href="https://bardskh.com/en/terms">Terms</a>
+      <a href="https://bardskh.com/en/privacy">Privacy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© <span id="year"></span> Bards</div>
+    <div class="footer-social">
+      <a href="https://t.me/bards_official" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg width="14" height="14" viewBox="0 0 240 240" fill="none"><path fill="currentColor" d="M180.5 72.3 158 179.2c-1.7 7.6-6.2 9.5-12.5 5.9l-34.6-25.5-16.7 16.1c-1.8 1.8-3.4 3.4-6.9 3.4l2.5-35.1 63.9-57.7c2.8-2.5-.6-3.9-4.3-1.4L69 138.6l-34.3-10.7c-7.5-2.3-7.6-7.5 1.6-11.1l134-51.7c6.2-2.3 11.7 1.5 9.7 11.2z"/></svg>
+      </a>
+      <a href="mailto:support@bardskh.com" aria-label="Email">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+    </div>
   </div>
 </footer>
 
 <script src="products.js"></script>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-document.getElementById('signinLink').href = bardsSigninUrl('/seller');
 
-// Sticky nav background on scroll
-(() => {
-  const nav = document.getElementById('mainNav');
-  const onScroll = () => nav.classList.toggle('nav-solid', window.scrollY > 40);
-  document.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
+try {
+  if (typeof bardsSigninUrl === 'function') {
+    document.getElementById('signinLink').href = bardsSigninUrl('/seller');
+  }
+} catch(e) {}
 
-// Minimal scroll-reveal via IntersectionObserver
-(() => {
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('is-visible'), i * 60);
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  els.forEach(el => io.observe(el));
-})();
-
-// Live categories — same GET /api/categories every other catalog page uses.
-// Each category renders as a photo tile: image placeholder (real <img> goes
-// here later) + category label underneath.
 (async () => {
   try {
+    if (typeof CategoriesAPI === 'undefined') { document.getElementById('catChips').innerHTML = ''; return; }
     const cats = await CategoriesAPI.fetch();
-    const grid = document.getElementById('catGrid');
-    if (!cats.length) { grid.innerHTML = ''; return; }
-    grid.innerHTML = cats.map(c => `
-      <div class="cat-tile reveal">
-        <div class="cat-shot shot">
-          <div class="shot-tag">${escapeHtml(c.name)}</div>
-        </div>
-        <div class="cat-label">${escapeHtml(c.name)}</div>
-      </div>
-    `).join('');
-    // re-observe newly injected reveal targets
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.15 });
-    grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    const el = document.getElementById('catChips');
+    if (!cats.length) { el.innerHTML = ''; return; }
+    el.innerHTML = cats.map(c => `<div class="cat-chip">${escapeHtml(c.name)}</div>`).join('');
   } catch(e) {
-    document.getElementById('catGrid').innerHTML = '';
+    document.getElementById('catChips').innerHTML = '';
   }
 })();
+
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in-view'), (i % 4) * 80);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('in-view'));
+}
+
+document.querySelectorAll('.faq-item').forEach(item => {
+  const btn = item.querySelector('.faq-q');
+  const panel = item.querySelector('.faq-a');
+  btn.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(other => {
+      if (other !== item) { other.classList.remove('open'); other.querySelector('.faq-a').style.maxHeight = null; }
+    });
+    if (isOpen) { item.classList.remove('open'); panel.style.maxHeight = null; }
+    else { item.classList.add('open'); panel.style.maxHeight = panel.scrollHeight + 'px'; }
+  });
+});
 </script>
 </body>
 </html>
