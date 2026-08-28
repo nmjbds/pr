@@ -10,7 +10,7 @@
 <style>
 :root{
   --black:#0A0A0A;--white:#FAFAFA;--gray-50:#F9F9F7;--gray-100:#F2F2F0;--gray-200:#E4E4E2;
-  --gray-300:#C8C8C6;--gray-400:#8A8A88;--gray-600:#4A4A48;--orange:#FF4F00;--red:#C8001A;--green:#16A34A;
+  --gray-300:#C8C8C6;--gray-400:#8A8A88;--gray-600:#4A4A48;
   --radius:14px;--radius-sm:10px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -26,86 +26,102 @@ button{font:inherit;}
 .reveal.in-view{opacity:1;transform:translateY(0);}
 @media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none;transition:none;} }
 
-/* ── Tag / hang-tag component (signature element) ── */
-.tag{position:relative;display:inline-flex;align-items:center;gap:7px;padding:8px 14px 8px 22px;
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;font-weight:500;
-  border:1.5px solid currentColor;border-radius:3px 13px 13px 3px;transform:rotate(-3deg);white-space:nowrap;}
-.tag::before{content:'';position:absolute;left:8px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;border:1.5px solid currentColor;}
-.tag-str{position:absolute;width:1.5px;height:13px;background:currentColor;opacity:.55;left:11px;top:-11px;transform:rotate(20deg);transform-origin:bottom center;}
-.tag--light{color:var(--white);}
-.tag--dark{color:var(--black);}
-.tag .dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;}
-
 /* ── Nav ── */
-.nav{background:var(--gray-50);border-bottom:1px solid var(--gray-200);position:relative;z-index:20;}
-.nav-inner{max-width:1080px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;}
+.nav{background:var(--gray-50);border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:30;
+  transition:box-shadow .25s ease;}
+.nav.scrolled{box-shadow:0 6px 20px -6px rgba(0,0,0,.14);}
+.nav-inner{max-width:1080px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
 .brand{font-family:'Bebas Neue';font-size:22px;letter-spacing:4px;text-decoration:none;color:var(--black);display:flex;align-items:center;gap:8px;}
 .brand-mark{width:16px;height:16px;border:1.5px solid var(--black);border-radius:2px 7px 7px 2px;position:relative;flex-shrink:0;}
 .brand-mark::before{content:'';position:absolute;left:2.5px;top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:50%;border:1px solid var(--black);}
-.nav-jump{display:flex;gap:22px;}
-.nav-jump a{font-size:11.5px;font-weight:600;text-decoration:none;color:var(--gray-600);transition:color .18s;}
-.nav-jump a:hover{color:var(--black);}
-.nav-links{display:flex;align-items:center;gap:18px;}
-.nav-signin{font-size:12px;font-weight:600;text-decoration:none;color:var(--gray-600);}
-.nav-signin:hover{color:var(--black);}
-.nav-cta{height:38px;padding:0 18px;background:var(--black);color:#fff;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;text-decoration:none;transition:background .18s;}
-.nav-cta:hover{background:var(--orange);}
-@media (max-width:760px){ .nav-jump{display:none;} }
+.hamburger{width:40px;height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  background:none;border:1.5px solid var(--gray-200);border-radius:8px;cursor:pointer;transition:border-color .18s;}
+.hamburger:hover{border-color:var(--gray-400);}
+.hamburger span{width:18px;height:1.5px;background:var(--black);transition:transform .25s,opacity .2s;}
+.nav.open .hamburger span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav.open .hamburger span:nth-child(2){opacity:0;}
+.nav.open .hamburger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-panel{max-height:0;overflow:hidden;transition:max-height .32s ease;background:var(--white);}
+.nav.open .nav-panel{max-height:420px;border-top:1px solid var(--gray-200);}
+.nav-panel-inner{max-width:1080px;margin:0 auto;padding:6px 24px 18px;display:flex;flex-direction:column;}
+.nav-panel-inner a{padding:14px 0;font-size:13.5px;font-weight:600;text-decoration:none;color:var(--black);border-bottom:1px solid var(--gray-100);}
+.nav-panel-signin{color:var(--gray-600) !important;font-weight:500 !important;}
+.nav-panel-cta{margin-top:16px;text-align:center;justify-content:center;border-bottom:none !important;color:#fff !important;}
 
 /* ── Section shell ── */
 .blk{padding:76px 24px;position:relative;}
 .blk-inner{max-width:1080px;margin:0 auto;}
 .blk-head{max-width:560px;margin-bottom:44px;}
-.eyebrow{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;font-weight:500;margin-bottom:14px;opacity:.6;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;font-weight:500;margin-bottom:14px;opacity:.55;}
 .blk h2{font-family:'Bebas Neue';font-size:clamp(30px,4.4vw,44px);letter-spacing:1px;line-height:1.02;}
 .blk-sub{font-size:13.5px;margin-top:10px;opacity:.65;max-width:440px;}
 
 .on-black{background:var(--black);color:var(--white);}
 .on-cream{background:var(--gray-50);color:var(--black);}
 .on-white{background:var(--white);color:var(--black);}
-.on-orange{background:var(--orange);color:var(--black);}
 
-/* ── Hero ── */
-.hero{background:var(--black);color:var(--white);padding:64px 0 90px;overflow:hidden;}
-.hero-top{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;justify-content:flex-end;margin-bottom:8px;}
-.hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:20px;align-items:end;}
-.hero-headline-wrap{padding-left:24px;}
-.hero h1{font-family:'Bebas Neue';font-size:clamp(56px,10.5vw,130px);letter-spacing:0;line-height:.86;
-  margin-left:-3px;text-transform:uppercase;}
-.hero h1 .ln{display:block;}
-.hero h1 .accent{color:var(--orange);}
-.hero-sub-col{padding:0 24px 4px 0;border-left:1.5px solid rgba(255,255,255,.18);padding-left:24px;}
-.hero-sub-col p{font-size:13.5px;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:26px;}
+/* ── Buttons (monochrome only) ── */
 .btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 28px;border-radius:4px;
   font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;
   transition:transform .12s,opacity .18s;}
 .btn:active{transform:scale(.98);}
-.btn-primary{background:var(--orange);color:#0A0A0A;}
-.btn-primary:hover{opacity:.9;}
-.btn-dark{background:var(--black);color:#fff;}
-.btn-dark:hover{opacity:.85;}
+.btn-primary{background:var(--black);color:#fff;}
+.btn-primary:hover{opacity:.85;}
+.btn-light{background:#fff;color:var(--black);}
+.btn-light:hover{opacity:.85;}
+
+/* ── Hero ── */
+.hero{background:var(--black);color:var(--white);padding:64px 0 0;overflow:hidden;}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:end;}
+.hero-headline-wrap{padding-left:24px;padding-bottom:56px;}
+.hero h1{font-family:'Bebas Neue';font-size:clamp(52px,9vw,110px);letter-spacing:0;line-height:.9;
+  margin-left:-3px;text-transform:uppercase;}
+.hero h1 .ln{display:block;}
+.hero h1 .accent{color:var(--white);}
+@supports (-webkit-text-stroke: 1px black){
+  .hero h1 .accent{color:transparent;-webkit-text-stroke:2px var(--white);}
+}
+.hero-lead{font-size:13.5px;color:rgba(255,255,255,.62);line-height:1.7;margin:22px 0 26px;max-width:400px;}
+.hero-photo{position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:340px;}
+.hero-photo img{width:100%;max-width:460px;max-height:560px;object-fit:contain;margin:0 auto;display:block;}
+.hero-photo-fallback{display:none;flex-direction:column;gap:6px;text-align:center;padding:40px 20px;margin:auto;}
+.hero-photo.placeholder-empty .hero-photo-fallback{display:flex;}
+.hero-photo.placeholder-empty img{display:none;}
 @media (max-width:820px){
   .hero-grid{grid-template-columns:1fr;}
-  .hero-sub-col{border-left:none;padding-left:24px;border-top:1.5px solid rgba(255,255,255,.18);padding-top:22px;margin-top:22px;}
-  .hero-headline-wrap{padding-left:24px;}
+  .hero-headline-wrap{padding-left:24px;padding-bottom:0;}
+  .hero-photo{min-height:280px;order:-1;}
+  .hero-photo img{max-height:320px;}
 }
 
-/* ── Photo slot (the one real-photography spot) ── */
-.photo-slot{position:relative;aspect-ratio:4/5;border:1.5px dashed rgba(255,255,255,.3);border-radius:4px;
-  overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);}
+/* ── Photo slot (dashboard screenshot frame) ── */
+.photo-slot{position:relative;border:1.5px dashed var(--gray-300);border-radius:4px;
+  overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--gray-50);}
 .photo-slot img{width:100%;height:100%;object-fit:cover;}
 .photo-slot-info{display:none;flex-direction:column;gap:6px;text-align:center;padding:20px;}
 .photo-slot.placeholder-empty .photo-slot-info{display:flex;}
-.ps-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1px;font-weight:700;color:var(--orange);}
-.ps-spec{font-family:'DM Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.4);line-height:1.6;}
+.ps-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1px;font-weight:700;color:var(--black);}
+.ps-spec{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--gray-600);line-height:1.6;}
+
+/* ── Dashboard showcase ── */
+.dash-showcase{display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:center;margin-bottom:60px;}
+@media (max-width:860px){ .dash-showcase{grid-template-columns:1fr;} }
+.browser-frame{border:1.5px solid var(--gray-200);border-radius:10px;overflow:hidden;background:#fff;}
+.browser-frame-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--gray-100);border-bottom:1px solid var(--gray-200);}
+.browser-frame-dot{width:8px;height:8px;border-radius:50%;background:var(--gray-300);}
+.browser-frame-url{margin-left:8px;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--gray-400);
+  background:#fff;border:1px solid var(--gray-200);border-radius:20px;padding:3px 12px;flex:1;}
+.browser-frame-body{aspect-ratio:16/10;position:relative;}
 
 /* ── Spec sheet (value props) ── */
+.spec-eyebrow-row{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--gray-400);
+  text-transform:uppercase;margin-bottom:6px;}
 .spec-list{display:flex;flex-direction:column;border-top:1.5px solid var(--gray-200);}
 .spec-row{display:grid;grid-template-columns:64px 40px 1fr 1.2fr;gap:20px;align-items:center;
   padding:22px 0;border-bottom:1.5px solid var(--gray-200);}
 .spec-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);}
-.spec-icon{width:38px;height:38px;border-radius:8px;background:var(--white);border:1.5px solid var(--gray-200);
-  display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0;}
+.spec-icon{width:38px;height:38px;border-radius:8px;background:var(--gray-100);
+  display:flex;align-items:center;justify-content:center;color:var(--black);flex-shrink:0;}
 .spec-title{font-size:14.5px;font-weight:700;}
 .spec-body{font-size:12.5px;color:var(--gray-600);line-height:1.6;}
 @media (max-width:700px){
@@ -113,7 +129,7 @@ button{font:inherit;}
   .spec-body{grid-column:2/-1;margin-top:2px;}
 }
 
-/* ── Categories (orange block) ── */
+/* ── Categories ── */
 .cat-chips{display:flex;gap:9px;flex-wrap:wrap;}
 .cat-chip{height:36px;padding:0 18px;border-radius:3px 12px 12px 3px;background:var(--black);color:var(--white);
   border:1.5px solid var(--black);font-size:12px;font-weight:600;display:flex;align-items:center;
@@ -126,7 +142,7 @@ button{font:inherit;}
   border-bottom:1px dashed rgba(255,255,255,.22);}
 .receipt-row:last-child{border-bottom:none;}
 .receipt-label{font-size:13px;font-weight:600;}
-.receipt-value{font-family:'DM Mono',monospace;font-size:13px;color:var(--orange);}
+.receipt-value{font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,.85);}
 .receipt-note{padding:18px 24px;font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;border-top:1.5px solid rgba(255,255,255,.2);}
 
 /* ── How it works (ticket stubs, cream) ── */
@@ -134,7 +150,8 @@ button{font:inherit;}
 .step{background:var(--white);border:1.5px solid var(--gray-200);border-top:3px dashed var(--gray-300);
   border-radius:0 0 8px 8px;padding:26px 22px;position:relative;}
 .step-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-400);margin-bottom:14px;letter-spacing:1px;}
-.step-icon{width:34px;height:34px;color:var(--orange);margin-bottom:14px;}
+.step-icon{width:34px;height:34px;color:var(--black);margin-bottom:14px;}
+.step-icon img{width:100%;height:100%;object-fit:contain;}
 .step-title{font-size:14.5px;font-weight:700;margin-bottom:6px;}
 .step-body{font-size:12.5px;color:var(--gray-600);line-height:1.6;}
 @media (max-width:820px){ .steps{grid-template-columns:1fr;} }
@@ -148,12 +165,12 @@ button{font:inherit;}
 .faq-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-400);flex-shrink:0;width:30px;}
 .faq-q-text{flex:1;font-size:13.5px;font-weight:600;color:var(--black);}
 .faq-icon{width:22px;height:22px;border-radius:50%;background:var(--gray-100);flex-shrink:0;display:flex;
-  align-items:center;justify-content:center;transition:transform .3s,background .2s;}
-.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--orange);}
+  align-items:center;justify-content:center;color:var(--black);transition:transform .3s,background .2s,color .2s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--black);color:#fff;}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
 .faq-a-inner{padding:0 0 22px 46px;font-size:12.5px;color:var(--gray-600);line-height:1.7;max-width:560px;}
 
-/* ── Contact + CTA (orange block) ── */
+/* ── Contact + CTA (cream) ── */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
 .contact-links{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
 .contact-link{display:flex;align-items:center;gap:10px;height:48px;padding:0 18px;border-radius:4px;
@@ -176,77 +193,106 @@ button{font:inherit;}
   color:rgba(255,255,255,.4);margin-bottom:16px;}
 .footer-col a{display:block;font-size:12.5px;color:rgba(255,255,255,.75);text-decoration:none;margin-bottom:11px;
   transition:color .18s;}
-.footer-col a:hover{color:var(--orange);}
+.footer-col a:hover{color:#fff;text-decoration:underline;}
 .footer-bottom{max-width:1080px;margin:0 auto;padding-top:22px;display:flex;align-items:center;
   justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:rgba(255,255,255,.4);}
 .footer-social{display:flex;gap:12px;}
 .footer-social a{width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);
   display:flex;align-items:center;justify-content:center;color:#fff;transition:border-color .18s;}
-.footer-social a:hover{border-color:var(--orange);}
+.footer-social a:hover{border-color:#fff;}
 @media (max-width:760px){ .footer-top{grid-template-columns:1fr 1fr;} }
 </style>
 </head>
 <body>
 
-<nav class="nav">
+<nav class="nav" id="siteNav">
   <div class="nav-inner">
     <a href="https://bardskh.com" class="brand"><span class="brand-mark"></span>BARDS</a>
-    <div class="nav-jump">
+    <button class="hamburger" id="menuBtn" aria-expanded="false" aria-controls="navPanel" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-panel" id="navPanel">
+    <div class="nav-panel-inner">
       <a href="#spec">Why Sell</a>
       <a href="#fees">Fees</a>
       <a href="#how">How It Works</a>
       <a href="#faq">FAQ</a>
-    </div>
-    <div class="nav-links">
-      <a href="#" id="signinLink" class="nav-signin">Already applied? Sign in</a>
-      <a href="/settle/form" class="nav-cta">Start Selling</a>
+      <a href="#" id="signinLink" class="nav-panel-signin">Already applied? Sign in</a>
+      <a href="/settle/form" class="btn btn-primary nav-panel-cta">Start Selling →</a>
     </div>
   </div>
 </nav>
 
 <!-- ══════ Hero ══════ -->
 <section class="hero">
-  <div class="hero-top">
-    <span class="tag tag--light reveal"><span class="tag-str"></span><span class="dot"></span>STATUS: APPLICATIONS OPEN</span>
-  </div>
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-headline-wrap reveal">
-        <h1><span class="ln">TAG IT.</span><span class="ln">RACK IT.</span><span class="ln accent">SHIP IT.</span></h1>
+        <h1><span class="ln">YOUR SHOP.</span><span class="ln accent">OUR SHOPPERS.</span></h1>
+        <p class="hero-lead">Cambodia's streetwear marketplace. Add your products — we bring the shoppers already browsing bardskh.com.</p>
+        <a href="/settle/form" class="btn btn-light">Start Selling →</a>
       </div>
-      <div class="hero-sub-col reveal">
-        <div class="photo-slot" style="max-width:220px;margin-bottom:22px;">
-          <!--
-            HERO PHOTO — replace src below with your own file.
-            assets/photo-hero-tagging.jpg
-            1200×1500px · 4:5 portrait crop
-            Subject: hands attaching a hang-tag to a garment, or folding
-            a piece into a shipping box — mid-action, no need to show a face
-            Light: natural side-light, one clear shadow direction
-            Backdrop: plain, single colour (concrete grey or canvas) — no clutter
-          -->
-          <img src="assets/photo-hero-tagging.jpg" alt="Hands attaching a hang-tag to a garment"
-               onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-empty');">
-          <div class="photo-slot-info">
-            <div class="ps-label">PHOTO — assets/photo-hero-tagging.jpg</div>
-            <div class="ps-spec">1200×1500px · 4:5 portrait<br>natural side-light · plain backdrop<br>hands tagging a garment or packing a box</div>
-          </div>
+      <div class="hero-photo reveal">
+        <!--
+          HERO PHOTO — replace src below with your own file.
+          assets/photo-hero-main.png (PNG if it needs transparency, JPG is fine too)
+          This is the one big photography moment on the page — go large
+          and modern. A transparent-background cutout (product shot or a
+          person) floats directly on the black hero with no card or frame.
+          A plain full-frame lifestyle photo also works, cropped to taste.
+          Recommended: at least 1600px on the longest side. Portrait or
+          square reads best here — this slot fits to height automatically,
+          so you don't need to pre-crop to an exact ratio.
+        -->
+        <img src="assets/photo-hero-main.png" alt="Bards seller product photo"
+             onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-empty');">
+        <div class="hero-photo-fallback">
+          <div class="ps-label" style="color:#fff">PHOTO — assets/photo-hero-main.png</div>
+          <div class="ps-spec" style="color:rgba(255,255,255,.45)">Large modern photo · transparent PNG cutout works best<br>≥1600px longest side · no frame needed, sized for you</div>
         </div>
-        <p>Cambodia's streetwear marketplace. Add your products — we bring the shoppers already browsing bardskh.com.</p>
-        <a href="/settle/form" class="btn btn-primary">Start Selling →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════ Why Sell — Spec Sheet ══════ -->
+<!-- ══════ Dashboard showcase + Spec Sheet ══════ -->
 <section class="blk on-white" id="spec">
   <div class="blk-inner">
-    <div class="blk-head reveal">
-      <div class="eyebrow">Why Bards</div>
-      <h2>The Spec Sheet</h2>
-      <div class="blk-sub">What you get, itemized.</div>
+    <div class="dash-showcase">
+      <div class="reveal">
+        <div class="eyebrow">Seller Dashboard</div>
+        <h2>Run Your Shop<br>From One Dashboard</h2>
+        <div class="blk-sub">Track orders, sales, and stock at a glance — manage your business without the busywork.</div>
+      </div>
+      <div class="reveal">
+        <div class="browser-frame">
+          <div class="browser-frame-bar">
+            <span class="browser-frame-dot"></span><span class="browser-frame-dot"></span><span class="browser-frame-dot"></span>
+            <span class="browser-frame-url">bardskh.com/seller/dashboard</span>
+          </div>
+          <div class="browser-frame-body photo-slot">
+            <!--
+              DASHBOARD SCREENSHOT — replace src below with your own file.
+              assets/screenshot-dashboard.png
+              Recommended capture size: 1440×900px (16:10), PNG
+              Content: your real seller dashboard — orders table, sales
+              summary cards, or stock list. Crop tight to the app content;
+              no need to include your own browser's address bar or tabs,
+              this frame provides that already.
+            -->
+            <img src="assets/screenshot-dashboard.png" alt="Seller dashboard showing orders and sales summary"
+                 onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-empty');">
+            <div class="photo-slot-info">
+              <div class="ps-label">SCREENSHOT — assets/screenshot-dashboard.png</div>
+              <div class="ps-spec">1440×900px (16:10) · PNG<br>orders table, sales summary, or stock view<br>crop to app content only — frame is provided</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="spec-eyebrow-row">What You Get</div>
     <div class="spec-list">
       <div class="spec-row reveal">
         <div class="spec-num">01</div>
@@ -284,8 +330,8 @@ button{font:inherit;}
   </div>
 </section>
 
-<!-- ══════ Categories (orange block) ══════ -->
-<section class="blk on-orange" id="categories">
+<!-- ══════ Categories ══════ -->
+<section class="blk on-cream" id="categories">
   <div class="blk-inner">
     <div class="blk-head reveal">
       <div class="eyebrow">Product Categories</div>
@@ -319,24 +365,36 @@ button{font:inherit;}
   <div class="blk-inner">
     <div class="blk-head reveal">
       <div class="eyebrow">Getting Started</div>
-      <h2>How It Works</h2>
+      <h2>Steps to Start Selling</h2>
     </div>
     <div class="steps">
       <div class="step reveal">
         <div class="step-file">FILE_01</div>
-        <div class="step-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6M9 16h6M9 8h1"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg></div>
+        <div class="step-icon">
+          <!-- ICON — assets/icon-step-apply.png · 512×512 transparent PNG (or .svg) -->
+          <img src="assets/icon-step-apply.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <svg style="display:none" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6M9 16h6M9 8h1"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg>
+        </div>
         <div class="step-title">Apply</div>
         <div class="step-body">Tell us about your business. Takes a few minutes.</div>
       </div>
       <div class="step reveal">
         <div class="step-file">FILE_02</div>
-        <div class="step-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div class="step-icon">
+          <!-- ICON — assets/icon-step-approved.png · 512×512 transparent PNG (or .svg) -->
+          <img src="assets/icon-step-approved.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <svg style="display:none" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
         <div class="step-title">Get Approved</div>
         <div class="step-body">Our team reviews your application.</div>
       </div>
       <div class="step reveal">
         <div class="step-file">FILE_03</div>
-        <div class="step-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></div>
+        <div class="step-icon">
+          <!-- ICON — assets/icon-step-live.png · 512×512 transparent PNG (or .svg) -->
+          <img src="assets/icon-step-live.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <svg style="display:none" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+        </div>
         <div class="step-title">Start Selling</div>
         <div class="step-body">List your first product and go live.</div>
       </div>
@@ -386,8 +444,8 @@ button{font:inherit;}
   </div>
 </section>
 
-<!-- ══════ Contact + Final CTA (orange block) ══════ -->
-<section class="blk on-orange">
+<!-- ══════ Contact + Final CTA (cream) ══════ -->
+<section class="blk on-cream">
   <div class="blk-inner">
     <div class="contact-grid">
       <div class="reveal">
@@ -407,7 +465,7 @@ button{font:inherit;}
       </div>
       <div class="final-cta-box reveal">
         <h2>Ready to grow<br>with Bards?</h2>
-        <a href="/settle/form" class="btn btn-dark">Start Selling →</a>
+        <a href="/settle/form" class="btn btn-primary">Start Selling →</a>
       </div>
     </div>
   </div>
@@ -471,6 +529,25 @@ try {
   }
 })();
 
+/* Sticky nav scroll shadow */
+const navElScroll = document.getElementById('siteNav');
+window.addEventListener('scroll', () => {
+  navElScroll.classList.toggle('scrolled', window.scrollY > 8);
+}, { passive: true });
+
+/* Hamburger menu */
+const navEl = document.getElementById('siteNav');
+const menuBtn = document.getElementById('menuBtn');
+menuBtn.addEventListener('click', () => {
+  const isOpen = navEl.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+document.querySelectorAll('#navPanel a').forEach(a => a.addEventListener('click', () => {
+  navEl.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+}));
+
+/* Scroll reveal */
 const revealEls = document.querySelectorAll('.reveal');
 if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver((entries) => {
@@ -486,6 +563,7 @@ if ('IntersectionObserver' in window) {
   revealEls.forEach(el => el.classList.add('in-view'));
 }
 
+/* FAQ accordion */
 document.querySelectorAll('.faq-item').forEach(item => {
   const btn = item.querySelector('.faq-q');
   const panel = item.querySelector('.faq-a');
